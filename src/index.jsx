@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Cards } from './bg-cards.js';
-import { Inputs } from './inputs.js';
-import { Confirm } from './confirm.js';
+import { Cards } from './bg-cards.jsx';
+import { Inputs } from './inputs.jsx';
+import { Confirm } from './confirm.jsx';
+import './css/interactive-card.css';
 
 
   
   export default function MyApp() {
     return (
-      <main className='container'>
+      <React.StrictMode>
+      <main className='container-fluid-md'>
         <Cards />
         <Inputs />
         <div>
@@ -28,6 +30,7 @@ import { Confirm } from './confirm.js';
         </div>
       <Confirm />
       </main>
+      </React.StrictMode>
     );
   }
 const root = ReactDOM.createRoot(document.getElementById('root'));

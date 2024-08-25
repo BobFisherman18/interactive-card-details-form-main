@@ -1,0 +1,22 @@
+$white: hsl(0, 0%, 100%);
+$l-grey-violet: hsl(270, 3%, 87%);
+$h-grey-violet: hsl(279, 6%, 55%);
+$darkViolet: hsl(278, 68%, 11%);
+
+$font: 18px;
+$weight: 500;
+#cardBack {
+    width: 75%;
+    position: relative;
+    bottom: 200px;
+}
+#cardFront {
+    width: 75%;
+}
+.attribution { 
+    font-size: 11px; 
+    text-align: center; 
+    a { 
+        color: hsl(228, 45%, 44%); 
+    }
+}
