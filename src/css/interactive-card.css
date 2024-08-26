@@ -1,11 +1,17 @@
-#cardBack {
-  width: 75%;
-  position: relative;
-  bottom: 200px;
+#cards {
+  margin-bottom: 70px;
 }
-
-#cardFront {
+#cards #cardBack {
   width: 75%;
+  position: fixed;
+  inset: 30px 0 0 75px;
+  max-width: 281.25px;
+}
+#cards #cardFront {
+  width: 75%;
+  max-width: 281.25px;
+  position: fixed;
+  inset: 115px 0 0 16px;
 }
 
 .attribution {
