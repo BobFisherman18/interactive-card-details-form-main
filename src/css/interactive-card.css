@@ -1,3 +1,7 @@
+* {
+  font-family: "Space Grotesk";
+}
+
 #cards {
   margin-bottom: 70px;
 }
@@ -12,6 +16,76 @@
   max-width: 281.25px;
   position: fixed;
   inset: 115px 0 0 16px;
+}
+#cards #cvc {
+  color: hsl(0, 0%, 100%);
+  min-width: 21px;
+  min-height: 15px;
+  font-size: 10px;
+  bottom: 127px;
+  right: 55px;
+  left: 299px;
+  letter-spacing: 2px;
+}
+#cards #numbers {
+  top: -108px;
+  left: 35px;
+  min-width: 240px;
+  min-height: 120px;
+}
+#cards #numbers #credit, #cards #numbers #name, #cards #numbers #date {
+  color: hsl(0, 0%, 100%);
+}
+#cards #numbers img {
+  max-width: 55px;
+  margin-bottom: 35px;
+}
+#cards #numbers #credit {
+  font-size: 18px;
+  font-weight: 500;
+  word-spacing: 1px;
+  letter-spacing: 2px;
+}
+#cards #numbers div {
+  font-size: 13px;
+}
+
+#inputs {
+  /* Chrome, Safari, Edge, Opera: hide arrows */
+  /* Firefox: hide arrows */
+}
+#inputs .form-label {
+  color: hsl(278, 68%, 11%);
+  font-weight: 500;
+  letter-spacing: 2px;
+  font-size: 13px;
+}
+#inputs input::-webkit-outer-spin-button,
+#inputs input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#inputs input[type=number] {
+  -moz-appearance: textfield;
+}
+#inputs input {
+  border-color: hsl(270, 3%, 87%);
+}
+#inputs input::-moz-placeholder {
+  color: hsl(279, 6%, 55%);
+  font-weight: 500;
+}
+#inputs input::placeholder {
+  color: hsl(279, 6%, 55%);
+  font-weight: 500;
+}
+#inputs div.col div.row {
+  margin-left: 0;
+}
+#inputs button {
+  padding: 12px;
+  background-color: hsl(278, 68%, 11%);
+  color: hsl(0, 0%, 100%);
 }
 
 .attribution {

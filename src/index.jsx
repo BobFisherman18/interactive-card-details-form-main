@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Cards } from './bg-cards.jsx';
 import { Inputs } from './inputs.jsx';
-import { Confirm } from './confirm.jsx';
 import './css/interactive-card.css';
 
 
@@ -14,18 +13,10 @@ import './css/interactive-card.css';
         <Cards />
         <Inputs />
         <div>
-          
-
-        000
-
-        Confirm
-
         Thank you!
         We've added your card details
         Continue
-  
         </div>
-      <Confirm />
       </main>
       </React.StrictMode>
     );

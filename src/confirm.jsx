@@ -1,7 +1,7 @@
 export function Confirm() {
     return (
         <div className="d-grid">
-        <button className="btn btn-danger">
+        <button className="btn my-3">
             Confirm
         </button>
         </div>
