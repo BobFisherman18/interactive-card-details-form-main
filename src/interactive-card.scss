@@ -10,100 +10,107 @@ $darkViolet: hsl(278, 68%, 11%);
 //Typography
 $font: 18px;
 $s-font: 13px;
+$xs-font: 9px;
 $letter-space: 2px;
+$xs-letter-space: 1px;
 $weight: 500;
 
 //width values
 $max-width-cards: 281.25px;
-* {
+body {
     font-family: "Space Grotesk";
-}
-#cards {
-    margin-bottom: 70px;
-    #cardBack {
-        width: 75%;
-        position: fixed;
-        inset: 30px 0 0 75px;
-        max-width: $max-width-cards;
-    }
-    #cardFront {
-        width: 75%;
-        max-width: $max-width-cards;
-        position: fixed;
-        inset: 115px 0 0 16px;
-    }
-    #cvc {
-        color: $white;
-        min-width: 21px;
-        min-height: 15px;
-        font-size: 10px;
-        bottom: 127px;
-        right: 55px;
-        left: 299px;
-        letter-spacing: $letter-space;
-    }
-    #numbers {
-       top: -108px;
-       left: 35px;
-       min-width: 240px;
-       min-height: 120px;
-       #credit, #name, #date {
-        color: $white;
-       }
-       img {
-        max-width: 55px;
-        margin-bottom: 35px;
-       }
-       #credit {
-        font-size: $font;
-        font-weight: $weight;
-        word-spacing: 1px;
-        letter-spacing: $letter-space;
-       }
-       div {
-        font-size: $s-font;
-       }
-    }
-}
-#inputs {
-    .form-label {
-        color: $darkViolet;
-        font-weight: 500;
-        letter-spacing: $letter-space;
-        font-size: $s-font;
-    }
-    /* Chrome, Safari, Edge, Opera: hide arrows */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    /* Firefox: hide arrows */
-    input[type="number"] {
-        -moz-appearance: textfield;
-    }
-    input {
-        border-color: $l-grey-violet;
-    }
-    input::placeholder {
-        color: $h-grey-violet;
-        font-weight: $weight;
-    }
-    div.col {
-        div.row {
-            margin-left: 0;
+    #cards {
+        margin-bottom: 70px;
+        #cardBack {
+            width: 75%;
+            position: fixed;
+            inset: 30px 0 0 75px;
+            max-width: $max-width-cards;
+        }
+        #cardFront {
+            width: 75%;
+            max-width: $max-width-cards;
+            position: fixed;
+            inset: 115px 0 0 16px;
+        }
+        #cvc {
+            color: $white;
+            min-width: 21px;
+            min-height: 15px;
+            font-size: 10px;
+            bottom: 127px;
+            right: 55px;
+            left: 297px;
+            letter-spacing: $xs-letter-space;
+        }
+        #numbers {
+        top: -108px;
+        left: 35px;
+        min-width: 240px;
+        min-height: 120px;
+        #credit, #name, #date {
+            color: $white;
+        }
+        img {
+            max-width: 55px;
+            margin-bottom: 35px;
+        }
+        #credit {
+            font-size: 16px;
+            font-weight: $weight;
+            word-spacing: 1px;
+            letter-spacing: $letter-space;
+        }
+        div {
+            font-size: $xs-font;
+            letter-spacing: $letter-space;
+        }
         }
     }
-    button {
-        padding: 12px;
-        background-color: $darkViolet;
-        color: $white;
+    #inputs {
+        .form-label {
+            color: $darkViolet;
+            font-weight: 500;
+            letter-spacing: $letter-space;
+            font-size: $s-font;
+        }
+        /* Chrome, Safari, Edge, Opera: hide arrows */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Firefox: hide arrows */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        input {
+            border-color: $l-grey-violet;
+        }
+        input[type='text']:hover, 
+        input[type='number']:hover {
+            border-color: $darkViolet;
+        }
+        input::placeholder {
+            color: $h-grey-violet;
+            font-weight: $weight;
+        }
+        div.col {
+            div.row {
+                margin-left: 0;
+            }
+        }
+        button {
+            padding: 12px;
+            background-color: $darkViolet;
+            color: $white;
+        }
     }
-}
-.attribution { 
-    font-size: 11px; 
-    text-align: center; 
-    a { 
-        color: hsl(228, 45%, 44%); 
+    .attribution { 
+        font-size: 11px; 
+        text-align: center; 
+        a { 
+            color: hsl(228, 45%, 44%); 
+        }
     }
 }
