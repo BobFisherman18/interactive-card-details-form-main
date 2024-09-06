@@ -87,6 +87,9 @@ body {
         input {
             border-color: $l-grey-violet;
         }
+        .errorState {
+            border-color: $red;
+        }
         input[type='text']:hover, 
         input[type='number']:hover {
             border-color: $darkViolet;

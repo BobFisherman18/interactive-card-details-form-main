@@ -9,15 +9,15 @@ import './css/interactive-card.css';
   export default function MyApp() {
     return (
       <React.StrictMode>
-      <main className='container-fluid-md'>
-        <Cards />
-        <Inputs />
-        <div>
-        Thank you!
-        We've added your card details
-        Continue
-        </div>
-      </main>
+        <main className='container-fluid-md'>
+          <Cards />
+          <Inputs />
+          <div>
+          Thank you!
+          We've added your card details
+          Continue
+          </div>
+        </main>
       </React.StrictMode>
     );
   }

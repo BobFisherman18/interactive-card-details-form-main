@@ -1,17 +1,44 @@
-import { Confirm } from './confirm.jsx';
+import React, { useState } from "react";
 
 export function Inputs() {
-    const marginBottom = "mb-3";
+    const [inputValue, setInputValue] = useState('');
+    const [className, setClassName] = useState('');
+
+
+    // Function to handle input change
+    const handleInputChange = (e) => {
+            console.log(e.target.value);
+            console.log(e.target.classList);
+            setClassName(e.target.classList);
+            setInputValue(e.target.value);
+        };
+    
+    //Function to handle button click
+    const handleButtonClick = () => {
+        if (inputValue === '') {
+        //alert('Input field is empty!');
+        console.log(inputValue);
+        } else {
+        //alert(`Input contains: ${inputValue}`);
+        console.log(inputValue);
+        }
+    };
+    
     return (
         <section id="inputs" className="mx-4">
-            <div className={marginBottom}>
-                <label htmlFor='name' className="form-label">CARDHOLDER NAME</label>
-                <input type="text" className="form-control" placeholder="e.g. Jane Appleseed"/>
-            </div>
-            <div className="mb-3">
-                <label htmlFor='num' className="form-label">CARD NUMBER</label>
-                <input type="number" className="form-control" placeholder="e.g. 1234 5678 9123 0000"/>
-            </div>
+            <Input 
+                htmlFor='name'
+                type="text"
+                placeholder="e.g. Jane Appleseed"
+                text='CARDHOLDER NAME'
+                onChange={handleInputChange}
+            />
+            <Input 
+                htmlFor='num'
+                type="number"
+                placeholder="e.g. 1234 5678 9123 0000"
+                text='CARD NUMBER'
+            />
             <div className="mb-3">
                 <section className="row">
                 <div className="col"> 
@@ -21,20 +48,58 @@ export function Inputs() {
                         <input type="number" className="form-control col" placeholder="YY"/>
                     </div>
                 </div>
-                    <div className="col">
-                        <label htmlFor='cvc' className="form-label">CVC</label>
-                        <input type="number" className="form-control" placeholder="e.g. 123"/>
-                    </div>
+                    <Input 
+                        className='col'
+                        htmlFor='cvc'
+                        type='number'
+                        placeholder='e.g. 123'
+                        text='CVC'
+                    />
                 </section>
             </div>
-            <Confirm />
+            <div className="d-grid">
+            <button className="btn my-3" onClick={handleButtonClick}>
+                Confirm
+            </button>
+            </div>
         </section>
     );
 }
-export function Input() {
-    return (
-        <>
 
-        </>
+export function Input({
+    className='mb-3',
+    htmlFor, 
+    type, 
+    placeholder="Some Text", 
+    text,
+    onChange
+    }) {
+    return (
+    <>
+        <div className={className}>
+            <label htmlFor={htmlFor} className='form-label'>{text}</label>
+            <input type={type} className='form-control' placeholder={placeholder} onChange={onChange} />
+        </div>
+    </>
     );
 }
+
+/*
+export function Confirm() {
+    //const [text, setText] = useState('');
+    
+    const handleConfirm = () => {
+        text === '' ? 
+
+    }
+        
+    
+    return (
+        <div className="d-grid">
+        <button className="btn my-3" onClick={handleInputs}>
+            Confirm
+        </button>
+        </div>
+    );
+}
+*/
