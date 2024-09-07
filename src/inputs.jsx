@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
 export function Inputs() {
+    const [inputField, setInputField] = useState();
     const [inputValue, setInputValue] = useState('');
-    const [className, setClassName] = useState('');
+    const [isThereError, setIsThereError] = useState(false);
 
 
     // Function to handle input change
     const handleInputChange = (e) => {
             console.log(e.target.value);
             console.log(e.target.classList);
-            setClassName(e.target.classList);
+            console.log(e.target);
+            setInputField(e.target);
+            //setIsThereError(e.target.classList);
             setInputValue(e.target.value);
         };
     
@@ -18,9 +21,12 @@ export function Inputs() {
         if (inputValue === '') {
         //alert('Input field is empty!');
         console.log(inputValue);
+        console.log(isThereError);
+        setIsThereError(true);
         } else {
         //alert(`Input contains: ${inputValue}`);
         console.log(inputValue);
+        setIsThereError(false);
         }
     };
     
@@ -32,12 +38,16 @@ export function Inputs() {
                 placeholder="e.g. Jane Appleseed"
                 text='CARDHOLDER NAME'
                 onChange={handleInputChange}
+                errorState={`form-control ${isThereError ? 'errorState': ``}`}
+                errorDesc={isThereError ? 'Name is required' : ``}
             />
             <Input 
                 htmlFor='num'
                 type="number"
                 placeholder="e.g. 1234 5678 9123 0000"
                 text='CARD NUMBER'
+                errorState={`form-control ${isThereError ? 'errorState': ``}`}
+                errorDesc={isThereError ? 'Wrong format, numbers only' : ``}
             />
             <div className="mb-3">
                 <section className="row">
@@ -54,6 +64,8 @@ export function Inputs() {
                         type='number'
                         placeholder='e.g. 123'
                         text='CVC'
+                        errorState={`form-control ${isThereError ? 'errorState': ``}`}
+                        errorDesc={isThereError ? `Can't be blank` : ``}
                     />
                 </section>
             </div>
@@ -72,34 +84,17 @@ export function Input({
     type, 
     placeholder="Some Text", 
     text,
-    onChange
+    onChange,
+    errorState,
+    errorDesc
     }) {
     return (
     <>
         <div className={className}>
             <label htmlFor={htmlFor} className='form-label'>{text}</label>
-            <input type={type} className='form-control' placeholder={placeholder} onChange={onChange} />
+            <input type={type} className={errorState} placeholder={placeholder} onChange={onChange} />
         </div>
+        <p id="errorDesc">{errorDesc}</p>
     </>
     );
 }
-
-/*
-export function Confirm() {
-    //const [text, setText] = useState('');
-    
-    const handleConfirm = () => {
-        text === '' ? 
-
-    }
-        
-    
-    return (
-        <div className="d-grid">
-        <button className="btn my-3" onClick={handleInputs}>
-            Confirm
-        </button>
-        </div>
-    );
-}
-*/

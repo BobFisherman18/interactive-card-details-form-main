@@ -90,6 +90,9 @@ body {
         .errorState {
             border-color: $red;
         }
+        #errorDesc {
+            color: $red;
+        }
         input[type='text']:hover, 
         input[type='number']:hover {
             border-color: $darkViolet;
