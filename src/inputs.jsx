@@ -1,74 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext, useRef, forwardRef } from "react";
 
 export function Inputs() {
-    const [inputField, setInputField] = useState();
-    const [inputValue, setInputValue] = useState('');
-    const [isThereError, setIsThereError] = useState(false);
+
+const nameRef = useRef(0);
 
 
     // Function to handle input change
     const handleInputChange = (e) => {
+
             console.log(e.target.value);
-            console.log(e.target.classList);
-            console.log(e.target);
-            setInputField(e.target);
-            //setIsThereError(e.target.classList);
-            setInputValue(e.target.value);
+            
         };
-    
+    useEffect(() => {
+        console.log('wow');
+    })
     //Function to handle button click
     const handleButtonClick = () => {
-        if (inputValue === '') {
-        //alert('Input field is empty!');
-        console.log(inputValue);
-        console.log(isThereError);
-        setIsThereError(true);
-        } else {
-        //alert(`Input contains: ${inputValue}`);
-        console.log(inputValue);
-        setIsThereError(false);
-        }
+        nameRef.current ++;
     };
     
     return (
         <section id="inputs" className="mx-4">
-            <Input 
-                htmlFor='name'
-                type="text"
-                placeholder="e.g. Jane Appleseed"
-                text='CARDHOLDER NAME'
-                onChange={handleInputChange}
-                errorState={`form-control ${isThereError ? 'errorState': ``}`}
-                errorDesc={isThereError ? 'Name is required' : ``}
-            />
-            <Input 
-                htmlFor='num'
-                type="number"
-                placeholder="e.g. 1234 5678 9123 0000"
-                text='CARD NUMBER'
-                errorState={`form-control ${isThereError ? 'errorState': ``}`}
-                errorDesc={isThereError ? 'Wrong format, numbers only' : ``}
-            />
-            <div className="mb-3">
-                <section className="row">
-                <div className="col"> 
-                    <label htmlFor='date' className="form-label">EXP. DATE(MM/YY)</label>
-                    <div className="row">
-                        <input type="number" className="form-control col me-2" placeholder="MM"/>
-                        <input type="number" className="form-control col" placeholder="YY"/>
-                    </div>
-                </div>
-                    <Input 
-                        className='col'
-                        htmlFor='cvc'
-                        type='number'
-                        placeholder='e.g. 123'
-                        text='CVC'
-                        errorState={`form-control ${isThereError ? 'errorState': ``}`}
-                        errorDesc={isThereError ? `Can't be blank` : ``}
-                    />
-                </section>
-            </div>
+            <InputField 
+            >
+                <Label htmlFor='name'>CARDHOLDER NAME</Label>
+                <Input 
+                    type="text"
+                    placeholder="e.g. Jane Appleseed"
+                    onChange={handleInputChange}
+                />
+            </InputField>
+            <InputField>
+                <Label htmlFor='num'>CARD NUMBER</Label>
+                <Input 
+                  type="number"
+                  placeholder="e.g. 1234 5678 9123 0000"  
+                />
+            </InputField>
+            <InputField>
+                <InputField className="row">
+                    <InputField className="col">
+                        <Label htmlFor='date'>EXP. DATE(MM/YY)</Label>
+                        <InputField className="row">
+                            <Input 
+                                type='number'
+                                placeholder="MM"
+                                col='col'
+                                margin='me-2'
+                            />
+                            <Input 
+                                type='number'
+                                placeholder="YY"
+                                col='col'
+                            />
+                        </InputField>
+                    </InputField>
+                    <InputField className="col">
+                        <Label htmlFor='cvc'>CVC</Label>
+                        <Input 
+                            type='number'
+                            placeholder='e.g. 123'
+                        />
+                    </InputField>
+                </InputField>
+            </InputField>
             <div className="d-grid">
             <button className="btn my-3" onClick={handleButtonClick}>
                 Confirm
@@ -78,23 +73,38 @@ export function Inputs() {
     );
 }
 
-export function Input({
+export function InputField({
     className='mb-3',
-    htmlFor, 
-    type, 
-    placeholder="Some Text", 
-    text,
-    onChange,
-    errorState,
-    errorDesc
+    children
     }) {
     return (
     <>
         <div className={className}>
-            <label htmlFor={htmlFor} className='form-label'>{text}</label>
-            <input type={type} className={errorState} placeholder={placeholder} onChange={onChange} />
+            {children}
         </div>
-        <p id="errorDesc">{errorDesc}</p>
     </>
+    );
+}
+export function Input({
+    col=``,
+    margin=``,
+    type,
+    placeholder,
+    onChange,
+    }) {
+    return (
+        <input 
+            type={type} 
+            className={`form-control ${col} ${margin}`} 
+            placeholder={placeholder}   
+            onChange={onChange}/>
+    );
+}
+export function Label({
+    htmlFor,
+    children
+    }) {
+    return (
+        <label htmlFor={htmlFor} className='form-label'>{children}</label>
     );
 }
