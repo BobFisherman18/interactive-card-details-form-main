@@ -12,25 +12,47 @@ export function Inputs() {
         cvc: useRef()
     }
 
+    const [inputValues, setInputValues] = useState({
+        name: '',
+        number: '',
+        month: ''
+      });
+
+      const [errors, setErrors] = useState({
+        name: '',
+        number: '',
+        month: ''
+      });
 
     // Function to handle input change
     const handleInputChange = (e) => {
-            console.log(e.target.value);
-            
-            
+        //destructured input element
+        const { name, value } = e.target;
+            setInputValues({
+            ...inputValues,
+            [name]: value,
+            });   
         };
     useEffect(() => {
         console.log('wow');
-    })
+    },[]);
     //Function to handle button click
     const handleButtonClick = () => {
+        console.log(isThereError);
+
+        if (inputValues.name.trim() === '') {
+            console.error('name is required');
+        }
+        /*
         const inputs = Object.values(inputRefs);
         inputs.map(input => {
             console.log(input.current);
-            input.current.value ===`` ? setIsThereError(true) :
+            input.current.value ===`` ? (setIsThereError(true), 
+                                        console.log(isThereError)) :
                                         setIsThereError(false)
 
         });
+        */
     };
     
     return (
@@ -42,7 +64,9 @@ export function Inputs() {
                     placeholder="e.g. Jane Appleseed"
                     onChange={handleInputChange}
                     ref={inputRefs.name}
-                    errorState={isThereError === true ? `errorState` : ``}
+                    name='name'
+                    errorState={inputValues.name.trim() === '' ? `errorState` : ``}
+                    value={inputValues.name}
                 />
             </InputField>
             <InputField>
@@ -51,6 +75,10 @@ export function Inputs() {
                   type="number"
                   placeholder="e.g. 1234 5678 9123 0000"
                   ref={inputRefs.number}  
+                  onChange={handleInputChange}
+                  name='number'
+                  errorState={inputValues.number.trim() === '' ? `errorState` : ``}
+                  value={inputValues.number}
                 />
             </InputField>
             <InputField>
@@ -110,6 +138,8 @@ const Input = forwardRef(( props, ref ) => {
         return (
             <>
             <input 
+                name={props.name}
+                value={props.value}
                 type={props.type} 
                 className={`form-control ${props.errorState} ${props.col} ${props.margin}`} 
                 placeholder={props.placeholder}   
