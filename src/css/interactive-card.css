@@ -75,6 +75,8 @@ body #inputs .errorState {
 }
 body #inputs #errorDesc {
   color: hsl(0, 100%, 66%);
+  position: relative;
+  bottom: 10px;
 }
 body #inputs input[type=text]:hover,
 body #inputs input[type=number]:hover {

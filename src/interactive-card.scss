@@ -92,6 +92,8 @@ body {
         }
         #errorDesc {
             color: $red;
+            position: relative;
+            bottom: 10px;
         }
         input[type='text']:hover, 
         input[type='number']:hover {

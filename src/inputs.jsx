@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext, useRef, forwardRef } from "reac
 export function Inputs() {
 
     const [isThereError, setIsThereError] = useState(false);
+   //const [handleInputChange, setHandleInputChange] = useState();
 
     const inputRefs = {
         name: useRef(),
@@ -15,34 +16,44 @@ export function Inputs() {
     const [inputValues, setInputValues] = useState({
         name: '',
         number: '',
-        month: ''
+        month: '',
+        year: '',
+        cvc: ''
       });
 
-      const [errors, setErrors] = useState({
-        name: '',
-        number: '',
-        month: ''
+    const [errors, setErrors] = useState({
+        name: 'Name is required',
+        number: 'Wrong format, numbers only',
+        date: `Can't be blank`,
+        cvc: ''
       });
+    const errorName = inputValues.name.trim()===`` ? 
+                    (<span id="errorDesc">{errors.name}</span>) : ``
+    const errorNumber = inputValues.number.trim()===`` ? 
+                    (<span id="errorDesc">{errors.number}</span>) : ``
+    const errorDate = inputValues.month.trim()===`` || 
+                      inputValues.year.trim()===`` ? 
+                    (<span id="errorDesc">{errors.date}</span>) : ``
+    const errorCvc = inputValues.cvc.trim()===`` ? 
+                    (<span id="errorDesc">{errors.cvc}</span>) : ``                
 
-    // Function to handle input change
-    const handleInputChange = (e) => {
+        // Function to handle input change
+        const handleInputChange = (e) => {
         //destructured input element
         const { name, value } = e.target;
             setInputValues({
             ...inputValues,
             [name]: value,
-            });   
-        };
+            });
+            
+        }    
     useEffect(() => {
         console.log('wow');
     },[]);
     //Function to handle button click
     const handleButtonClick = () => {
         console.log(isThereError);
-
-        if (inputValues.name.trim() === '') {
-            console.error('name is required');
-        }
+                
         /*
         const inputs = Object.values(inputRefs);
         inputs.map(input => {
@@ -57,7 +68,8 @@ export function Inputs() {
     
     return (
         <section id="inputs" className="mx-4">
-            <InputField >
+            <InputField 
+            errorDesc={errorName}>
                 <Label htmlFor='name'>CARDHOLDER NAME</Label>
                 <Input 
                     type="text"
@@ -69,7 +81,7 @@ export function Inputs() {
                     value={inputValues.name}
                 />
             </InputField>
-            <InputField>
+            <InputField errorDesc={errorNumber}>
                 <Label htmlFor='num'>CARD NUMBER</Label>
                 <Input 
                   type="number"
@@ -85,21 +97,29 @@ export function Inputs() {
                 <InputField className="row">
                     <InputField className="col">
                         <Label htmlFor='date'>EXP. DATE(MM/YY)</Label>
-                        <InputField className="row">
+                        <InputField className="row" errorDesc={errorDate}>
                             <Input 
                                 type='number'
                                 placeholder="MM"
                                 col='col'
                                 margin='me-2'
                                 ref={inputRefs.month}
+                                onChange={handleInputChange}
+                                name='month'
+                                errorState={inputValues.month.trim() === '' ? `errorState` : ``}
+                                value={inputValues.month}
                             />
                             <Input 
                                 type='number'
                                 placeholder="YY"
                                 col='col'
                                 ref={inputRefs.year}
+                                onChange={handleInputChange}
+                                name='year'
+                                errorState={inputValues.year.trim() === '' ? `errorState` : ``}
+                                value={inputValues.year}
                             />
-                        </InputField>
+                        </InputField >
                     </InputField>
                     <InputField className="col">
                         <Label htmlFor='cvc'>CVC</Label>
@@ -124,12 +144,13 @@ export function Button({ margin, onClick, children }) {
         <button className={`btn ${margin}`} onClick={onClick}>{children}</button>
     );
 }
-export function InputField({ className='mb-3', children }) {
+export function InputField({ className='mb-3', children, errorDesc }) {
     return (
     <>
         <div className={className}>
             {children}
         </div>
+        {errorDesc}
     </>
     );
 }
