@@ -90,10 +90,13 @@ body {
         .errorState {
             border-color: $red;
         }
-        #errorDesc {
+        .errorDesc {
             color: $red;
             position: relative;
             bottom: 10px;
+        }
+        #dateField, #cvcField {
+            bottom: 0;
         }
         input[type='text']:hover, 
         input[type='number']:hover {

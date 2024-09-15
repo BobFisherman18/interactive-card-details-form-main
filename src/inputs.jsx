@@ -22,33 +22,40 @@ export function Inputs() {
       });
 
     const [errors, setErrors] = useState({
-        name: 'Name is required',
-        number: 'Wrong format, numbers only',
-        date: `Can't be blank`,
+        name: '',
+        number: '',
+        date: ``,
         cvc: ''
       });
     const errorName = inputValues.name.trim()===`` ? 
-                    (<span id="errorDesc">{errors.name}</span>) : ``
+                    (<span className="errorDesc">{errors.name}</span>) : ``
     const errorNumber = inputValues.number.trim()===`` ? 
-                    (<span id="errorDesc">{errors.number}</span>) : ``
+                    (<span className="errorDesc">{errors.number}</span>) : ``
     const errorDate = inputValues.month.trim()===`` || 
                       inputValues.year.trim()===`` ? 
-                    (<span id="errorDesc">{errors.date}</span>) : ``
+                    (<span className="errorDesc" id="dateField">{errors.date}</span>) : ``
     const errorCvc = inputValues.cvc.trim()===`` ? 
-                    (<span id="errorDesc">{errors.cvc}</span>) : ``                
+                    (<span className="errorDesc" id="cvcField">{errors.cvc}</span>) : ``                
 
         // Function to handle input change
         const handleInputChange = (e) => {
         //destructured input element
         const { name, value } = e.target;
             setInputValues({
-            ...inputValues,
-            [name]: value,
+                ...inputValues,
+                [name]: value,
             });
             
         }    
     useEffect(() => {
-        console.log('wow');
+        setErrors((inputValues) => ({
+            ...inputValues,
+            name: 'Name is required',
+            number: 'Wrong format, numbers only',
+            date: `Can't be blank`,
+            cvc: `Can't be blank`
+        })
+    );
     },[]);
     //Function to handle button click
     const handleButtonClick = () => {
@@ -127,7 +134,12 @@ export function Inputs() {
                             type='number'
                             placeholder='e.g. 123'
                             ref={inputRefs.cvc}
+                            onChange={handleInputChange}
+                            name='cvc'
+                            errorState={inputValues.cvc.trim() === '' ? `errorState` : ``}
+                            value={inputValues.cvc}
                         />
+                        {errorCvc}
                     </InputField>
                 </InputField>
             </InputField>

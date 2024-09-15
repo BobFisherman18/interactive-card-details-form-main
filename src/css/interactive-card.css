@@ -73,10 +73,13 @@ body #inputs input {
 body #inputs .errorState {
   border-color: hsl(0, 100%, 66%);
 }
-body #inputs #errorDesc {
+body #inputs .errorDesc {
   color: hsl(0, 100%, 66%);
   position: relative;
   bottom: 10px;
+}
+body #inputs #dateField, body #inputs #cvcField {
+  bottom: 0;
 }
 body #inputs input[type=text]:hover,
 body #inputs input[type=number]:hover {
