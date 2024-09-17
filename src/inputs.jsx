@@ -5,16 +5,8 @@ export function Inputs() {
     const [isThereError, setIsThereError] = useState(false);
    //const [handleInputChange, setHandleInputChange] = useState();
 
-    const inputRefs = {
-        name: useRef(),
-        number: useRef(),
-        month: useRef(),
-        year: useRef(),
-        cvc: useRef()
-    }
-
     const [inputValues, setInputValues] = useState({
-        name: '',
+        name:'',
         number: '',
         month: '',
         year: '',
@@ -22,13 +14,19 @@ export function Inputs() {
       });
 
     const [errors, setErrors] = useState({
-        name: '',
+        name:  {
+            nameEmpty: '',
+            nameValue: '',
+            nameNumbers: '',
+        },
         number: '',
         date: ``,
         cvc: ''
       });
+
+
     const errorName = inputValues.name.trim()===`` ? 
-                    (<span className="errorDesc">{errors.name}</span>) : ``
+                    (<span className="errorDesc">{errors.name.nameEmpty}</span>) : ``
     const errorNumber = inputValues.number.trim()===`` ? 
                     (<span className="errorDesc">{errors.number}</span>) : ``
     const errorDate = inputValues.month.trim()===`` || 
@@ -37,6 +35,32 @@ export function Inputs() {
     const errorCvc = inputValues.cvc.trim()===`` ? 
                     (<span className="errorDesc" id="cvcField">{errors.cvc}</span>) : ``                
 
+    let inputClass = 'form-control';
+
+    const getErrorMessage = () => {
+        const errorFields = {};
+        const areInputsEmpty = Object.values(inputValues).some(value => value === ``);
+        console.log(areInputsEmpty);
+        if(areInputsEmpty) {
+            console.log(inputValues);
+            if(inputValues.name === ``){
+                errorFields.name = <ErrorField>{errors.name.nameEmpty}</ErrorField>;
+            }
+            else if (inputValues.name.length === 1) {
+                errorFields.name = <ErrorField>{errors.name.nameValue}</ErrorField>;
+                console.log(errorFields);
+            }
+         }
+         return errorFields;
+    }  
+    const errorDescription = getErrorMessage();
+    console.log(errorDescription.name);
+    /*
+    const displayErrorMessage = () => {
+        const message = getErrorMessage();
+        return <span className="errorDesc">{message}</span>
+    } 
+        */
         // Function to handle input change
         const handleInputChange = (e) => {
         //destructured input element
@@ -45,18 +69,21 @@ export function Inputs() {
                 ...inputValues,
                 [name]: value,
             });
-            
         }    
     useEffect(() => {
         setErrors((inputValues) => ({
             ...inputValues,
-            name: 'Name is required',
+            name:  {
+                nameEmpty: 'Name is required',
+                nameValue: 'Name must have more than one letter',
+                nameNumbers: 'Name cannot contain numbers',
+            },
             number: 'Wrong format, numbers only',
             date: `Can't be blank`,
             cvc: `Can't be blank`
         })
     );
-    },[]);
+    },[inputValues]);
     //Function to handle button click
     const handleButtonClick = () => {
         console.log(isThereError);
@@ -76,13 +103,12 @@ export function Inputs() {
     return (
         <section id="inputs" className="mx-4">
             <InputField 
-            errorDesc={errorName}>
+            errorDesc={errorDescription.name}>
                 <Label htmlFor='name'>CARDHOLDER NAME</Label>
                 <Input 
                     type="text"
                     placeholder="e.g. Jane Appleseed"
                     onChange={handleInputChange}
-                    ref={inputRefs.name}
                     name='name'
                     errorState={inputValues.name.trim() === '' ? `errorState` : ``}
                     value={inputValues.name}
@@ -93,7 +119,6 @@ export function Inputs() {
                 <Input 
                   type="number"
                   placeholder="e.g. 1234 5678 9123 0000"
-                  ref={inputRefs.number}  
                   onChange={handleInputChange}
                   name='number'
                   errorState={inputValues.number.trim() === '' ? `errorState` : ``}
@@ -110,7 +135,6 @@ export function Inputs() {
                                 placeholder="MM"
                                 col='col'
                                 margin='me-2'
-                                ref={inputRefs.month}
                                 onChange={handleInputChange}
                                 name='month'
                                 errorState={inputValues.month.trim() === '' ? `errorState` : ``}
@@ -120,7 +144,6 @@ export function Inputs() {
                                 type='number'
                                 placeholder="YY"
                                 col='col'
-                                ref={inputRefs.year}
                                 onChange={handleInputChange}
                                 name='year'
                                 errorState={inputValues.year.trim() === '' ? `errorState` : ``}
@@ -133,7 +156,6 @@ export function Inputs() {
                         <Input 
                             type='number'
                             placeholder='e.g. 123'
-                            ref={inputRefs.cvc}
                             onChange={handleInputChange}
                             name='cvc'
                             errorState={inputValues.cvc.trim() === '' ? `errorState` : ``}
@@ -166,26 +188,29 @@ export function InputField({ className='mb-3', children, errorDesc }) {
     </>
     );
 }
-//This component is used to forward refs as props
-const Input = forwardRef(( props, ref ) => {
-        return (
-            <>
-            <input 
-                name={props.name}
-                value={props.value}
-                type={props.type} 
-                className={`form-control ${props.errorState} ${props.col} ${props.margin}`} 
-                placeholder={props.placeholder}   
-                onChange={props.onChange}
-                ref={ref}
-            /> 
-            </>
-        )
-    });
-export default Input;
+
+
+export function Input(props) {
+    return (
+        <input 
+            name={props.name}
+            value={props.value}
+            type={props.type} 
+            className={`form-control ${props.errorState} ${props.col} ${props.margin}`} 
+            placeholder={props.placeholder}   
+            onChange={props.onChange}
+        />
+    );
+}
 
 export function Label({ htmlFor, children }) {
     return (
         <label htmlFor={htmlFor} className='form-label'>{children}</label>
+    );
+}
+
+export function ErrorField({children}) {
+    return (
+        <span className="errorDesc">{children}</span>
     );
 }
