@@ -24,9 +24,17 @@ export function Inputs() {
         cvc: ''
       });
 
+      const [errorDesc, setErrorDesc] = useState({
+        name:'',
+        number: '',
+        month: '',
+        year: '',
+        cvc: ''
+      });
+
 
     const errorName = inputValues.name.trim()===`` ? 
-                    (<span className="errorDesc">{errors.name.nameEmpty}</span>) : ``
+                    (<ErrorField>Name is required</ErrorField>) : ``
     const errorNumber = inputValues.number.trim()===`` ? 
                     (<span className="errorDesc">{errors.number}</span>) : ``
     const errorDate = inputValues.month.trim()===`` || 
@@ -44,23 +52,18 @@ export function Inputs() {
         if(areInputsEmpty) {
             console.log(inputValues);
             if(inputValues.name === ``){
-                errorFields.name = <ErrorField>{errors.name.nameEmpty}</ErrorField>;
+                //errorFields.name = errors.name.nameEmpty;
             }
             else if (inputValues.name.length === 1) {
                 errorFields.name = <ErrorField>{errors.name.nameValue}</ErrorField>;
                 console.log(errorFields);
             }
          }
-         return errorFields;
+         //return errorFields;
     }  
-    const errorDescription = getErrorMessage();
-    console.log(errorDescription.name);
-    /*
-    const displayErrorMessage = () => {
-        const message = getErrorMessage();
-        return <span className="errorDesc">{message}</span>
-    } 
-        */
+    //const errorDescription = getErrorMessage();
+    //console.log(errorDescription.name);
+
         // Function to handle input change
         const handleInputChange = (e) => {
         //destructured input element
@@ -69,12 +72,13 @@ export function Inputs() {
                 ...inputValues,
                 [name]: value,
             });
-        }    
+        }
+
     useEffect(() => {
         setErrors((inputValues) => ({
             ...inputValues,
             name:  {
-                nameEmpty: 'Name is required',
+                nameEmpty: errorName,
                 nameValue: 'Name must have more than one letter',
                 nameNumbers: 'Name cannot contain numbers',
             },
@@ -83,27 +87,29 @@ export function Inputs() {
             cvc: `Can't be blank`
         })
     );
+    
     },[inputValues]);
+
+
+    useEffect(() => {
+        setErrorDesc((inputValues) => ({
+            ...inputValues,
+            name: errors.name.nameEmpty,
+        })
+    );
+    }, [inputValues]);
+
+
     //Function to handle button click
     const handleButtonClick = () => {
         console.log(isThereError);
                 
-        /*
-        const inputs = Object.values(inputRefs);
-        inputs.map(input => {
-            console.log(input.current);
-            input.current.value ===`` ? (setIsThereError(true), 
-                                        console.log(isThereError)) :
-                                        setIsThereError(false)
-
-        });
-        */
     };
     
     return (
         <section id="inputs" className="mx-4">
             <InputField 
-            errorDesc={errorDescription.name}>
+            errorDesc={errorDesc.name}>
                 <Label htmlFor='name'>CARDHOLDER NAME</Label>
                 <Input 
                     type="text"
