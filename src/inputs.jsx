@@ -15,7 +15,7 @@ export function Inputs() {
 
     const [errors, setErrors] = useState({
         name:  {
-            nameEmpty: '',
+            nameEmpty: 'f',
             nameValue: '',
             nameNumbers: '',
         },
@@ -24,17 +24,30 @@ export function Inputs() {
         cvc: ''
       });
 
-      const [errorDesc, setErrorDesc] = useState({
-        name:'',
+    const [errorDesc, setErrorDesc] = useState({
+        name: errors.name.nameEmpty,
         number: '',
         month: '',
         year: '',
         cvc: ''
-      });
+    });
+      function testInputIfEmpty(value) {
+        //console.log(value);
+        return value.trim() === `` ? true : false;
+      }
 
+      function createTenary(condition, result1, result2) {
+        return condition ? (result1) : result2;
+      }
+      const errorName = createTenary(testInputIfEmpty(inputValues.name), 
+                                    <ErrorField>Name is required</ErrorField>, ``)
 
-    const errorName = inputValues.name.trim()===`` ? 
-                    (<ErrorField>Name is required</ErrorField>) : ``
+      function testInputMoreValue(value) {
+
+      }
+
+    //console.log(errorName);
+    console.log(errorDesc.name);
     const errorNumber = inputValues.number.trim()===`` ? 
                     (<span className="errorDesc">{errors.number}</span>) : ``
     const errorDate = inputValues.month.trim()===`` || 
@@ -44,7 +57,7 @@ export function Inputs() {
                     (<span className="errorDesc" id="cvcField">{errors.cvc}</span>) : ``                
 
     let inputClass = 'form-control';
-
+/*
     const getErrorMessage = () => {
         const errorFields = {};
         const areInputsEmpty = Object.values(inputValues).some(value => value === ``);
@@ -60,19 +73,20 @@ export function Inputs() {
             }
          }
          //return errorFields;
-    }  
+    }
+         */  
     //const errorDescription = getErrorMessage();
     //console.log(errorDescription.name);
 
-        // Function to handle input change
-        const handleInputChange = (e) => {
-        //destructured input element
-        const { name, value } = e.target;
-            setInputValues({
-                ...inputValues,
-                [name]: value,
-            });
-        }
+    // Function to handle input change
+    const handleInputChange = (e) => {
+    //destructured input element
+    const { name, value } = e.target;
+        setInputValues({
+            ...inputValues,
+            [name]: value,
+        });
+    }
 
     useEffect(() => {
         setErrors((inputValues) => ({
@@ -85,20 +99,11 @@ export function Inputs() {
             number: 'Wrong format, numbers only',
             date: `Can't be blank`,
             cvc: `Can't be blank`
-        })
+        }), console.log(inputValues.name)
     );
-    
     },[inputValues]);
 
-
-    useEffect(() => {
-        setErrorDesc((inputValues) => ({
-            ...inputValues,
-            name: errors.name.nameEmpty,
-        })
-    );
-    }, [inputValues]);
-
+    
 
     //Function to handle button click
     const handleButtonClick = () => {
