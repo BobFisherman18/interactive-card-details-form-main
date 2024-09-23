@@ -15,7 +15,7 @@ export function Inputs() {
 
     const [errors, setErrors] = useState({
         name:  {
-            nameEmpty: 'f',
+            nameEmpty: '',
             nameValue: '',
             nameNumbers: '',
         },
@@ -25,7 +25,7 @@ export function Inputs() {
       });
 
     const [errorDesc, setErrorDesc] = useState({
-        name: errors.name.nameEmpty,
+        name: '',
         number: '',
         month: '',
         year: '',
@@ -36,18 +36,36 @@ export function Inputs() {
         return value.trim() === `` ? true : false;
       }
 
-      function createTenary(condition, result1, result2) {
-        return condition ? (result1) : result2;
+      function createTenary(
+        condition1, result1, 
+        condition2 = null, result2 = null, finalresult) {
+        return condition1 ? (result1) : condition2 ? (result2): finalresult;
       }
-      const errorName = createTenary(testInputIfEmpty(inputValues.name), 
-                                    <ErrorField>Name is required</ErrorField>, ``)
 
       function testInputMoreValue(value) {
-
+        return value.length === 1 ? true : false;
       }
+      //const errorName = createTenary(testInputIfEmpty(inputValues.name), 
+                                    //<ErrorField>Name is required</ErrorField>, ``)
+      /*
+      const errorName = testInputIfEmpty(inputValues.name)
+                        ? (<ErrorField>Name is Required</ErrorField>) 
+                        : testInputMoreValue(inputValues.name)
+                        ? (<ErrorField>Name must 
+                            have more than one letter</ErrorField>)
+                        : ``;
+      */
+        const errorName = createTenary(
+            testInputIfEmpty(inputValues.name), 
+            <ErrorField>Name is required</ErrorField>,
+            testInputMoreValue(inputValues.name),
+            <ErrorField>Name must 
+            have more than one letter</ErrorField>, ``);
+
+
 
     //console.log(errorName);
-    console.log(errorDesc.name);
+    //console.log(errorDesc.name);
     const errorNumber = inputValues.number.trim()===`` ? 
                     (<span className="errorDesc">{errors.number}</span>) : ``
     const errorDate = inputValues.month.trim()===`` || 
@@ -87,12 +105,12 @@ export function Inputs() {
             [name]: value,
         });
     }
-
+    
     useEffect(() => {
         setErrors((inputValues) => ({
             ...inputValues,
             name:  {
-                nameEmpty: errorName,
+                nameEmpty:  errorName,
                 nameValue: 'Name must have more than one letter',
                 nameNumbers: 'Name cannot contain numbers',
             },
@@ -102,7 +120,7 @@ export function Inputs() {
         }), console.log(inputValues.name)
     );
     },[inputValues]);
-
+    
     
 
     //Function to handle button click
@@ -114,7 +132,7 @@ export function Inputs() {
     return (
         <section id="inputs" className="mx-4">
             <InputField 
-            errorDesc={errorDesc.name}>
+            errorDesc={errorName}>
                 <Label htmlFor='name'>CARDHOLDER NAME</Label>
                 <Input 
                     type="text"
