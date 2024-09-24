@@ -32,19 +32,36 @@ export function Inputs() {
         cvc: ''
     });
       function testInputIfEmpty(value) {
-        //console.log(value);
         return value.trim() === `` ? true : false;
       }
 
       function createTenary(
         condition1, result1, 
-        condition2 = null, result2 = null, finalresult) {
-        return condition1 ? (result1) : condition2 ? (result2): finalresult;
+        condition2 = null, result2 = null, 
+        condition3 = null, result3 = null,
+        finalresult) {
+        return condition1 ? (result1) : 
+               condition2 ? (result2) : 
+               condition3 ? (result3) :
+               finalresult;
       }
 
       function testInputMoreValue(value) {
         return value.length === 1 ? true : false;
       }
+
+      function changeErrorBorder(
+        condition1, condition2 = null, 
+        condition3 = null, errorClass, finalresult) {
+        return condition1 || condition2 || condition3 ? errorClass : finalresult;
+      }
+      function testName(value) {
+        let numExp = /[^a-zA-Z\s]/gm;
+        return numExp.test(value);
+      }
+      //testNameIfNum(inputValues.name);
+      const test = testName(inputValues.name);
+      console.log(test);
       //const errorName = createTenary(testInputIfEmpty(inputValues.name), 
                                     //<ErrorField>Name is required</ErrorField>, ``)
       /*
@@ -55,18 +72,30 @@ export function Inputs() {
                             have more than one letter</ErrorField>)
                         : ``;
       */
-        const errorName = createTenary(
+        let errorName = createTenary(
             testInputIfEmpty(inputValues.name), 
             <ErrorField>Name is required</ErrorField>,
             testInputMoreValue(inputValues.name),
-            <ErrorField>Name must 
-            have more than one letter</ErrorField>, ``);
+            <ErrorField>Name must have more 
+            than one letter</ErrorField>, 
+            testName(inputValues.name),
+            <ErrorField>Name cannot contain 
+            numbers or special characters
+            </ErrorField>, ``);
+
+        let errorNameInput = changeErrorBorder(
+            testInputIfEmpty(inputValues.name),
+            testInputMoreValue(inputValues.name),
+            testName(inputValues.name),
+            'errorState', ``);
+        
+            
 
 
 
     //console.log(errorName);
     //console.log(errorDesc.name);
-    const errorNumber = inputValues.number.trim()===`` ? 
+    const errorNumber = inputValues.number.trim()===`` ?  
                     (<span className="errorDesc">{errors.number}</span>) : ``
     const errorDate = inputValues.month.trim()===`` || 
                       inputValues.year.trim()===`` ? 
@@ -139,7 +168,7 @@ export function Inputs() {
                     placeholder="e.g. Jane Appleseed"
                     onChange={handleInputChange}
                     name='name'
-                    errorState={inputValues.name.trim() === '' ? `errorState` : ``}
+                    errorState={errorNameInput}
                     value={inputValues.name}
                 />
             </InputField>
@@ -152,6 +181,7 @@ export function Inputs() {
                   name='number'
                   errorState={inputValues.number.trim() === '' ? `errorState` : ``}
                   value={inputValues.number}
+                  max={16}
                 />
             </InputField>
             <InputField>
@@ -219,15 +249,23 @@ export function InputField({ className='mb-3', children, errorDesc }) {
 }
 
 
-export function Input(props) {
+export function Input({
+    name, value, type,
+    errorState, col, margin, 
+    placeholder, onChange, 
+    min = null, max = null
+
+}) {
     return (
         <input 
-            name={props.name}
-            value={props.value}
-            type={props.type} 
-            className={`form-control ${props.errorState} ${props.col} ${props.margin}`} 
-            placeholder={props.placeholder}   
-            onChange={props.onChange}
+            name={name}
+            value={value}
+            type={type} 
+            className={`form-control ${errorState} ${col} ${margin}`} 
+            placeholder={placeholder}   
+            onChange={onChange}
+            min={min}
+            max={max}
         />
     );
 }
