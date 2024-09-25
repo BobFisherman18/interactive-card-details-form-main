@@ -59,9 +59,13 @@ export function Inputs() {
         let numExp = /[^a-zA-Z\s]/gm;
         return numExp.test(value);
       }
+      function testNumber(value) {
+        let onlyNumbers = /^[0-9]*$/gm;
+        return onlyNumbers.test(value);
+      }
       //testNameIfNum(inputValues.name);
-      const test = testName(inputValues.name);
-      console.log(test);
+     // const test = testName(inputValues.name);
+      console.log(testNumber(inputValues.number));
       //const errorName = createTenary(testInputIfEmpty(inputValues.name), 
                                     //<ErrorField>Name is required</ErrorField>, ``)
       /*
@@ -88,22 +92,42 @@ export function Inputs() {
             testInputMoreValue(inputValues.name),
             testName(inputValues.name),
             'errorState', ``);
+
+        let errorNumber = createTenary(
+            testInputIfEmpty(inputValues.number),
+            <ErrorField>Card number is required</ErrorField>,
+            testNumber(inputValues.number),
+            <ErrorField>Wrong format, numbers only</ErrorField>,``);
+        /*
+        let errorNumberInput = 
+        testInputIfEmpty(inputValues.number) || testNumber(inputValues.number) || null
+        ? 'errorState': ``;
+        */
+        let errorNumberInput = changeErrorBorder(
+            testInputIfEmpty(inputValues.number),
+            testNumber(inputValues.number), null,
+            `errorState`, ``);
         
+        /*
+        changeErrorBorder(
+            testInputIfEmpty(inputValues.number), 
+            testNumber(inputValues.number), 
+            'errorState', ``);
+            console.log(errorNameInput);
+            */
             
 
 
 
     //console.log(errorName);
     //console.log(errorDesc.name);
-    const errorNumber = inputValues.number.trim()===`` ?  
-                    (<span className="errorDesc">{errors.number}</span>) : ``
+    //const errorNumber = inputValues.number.trim()===`` ?  
+                    //(<span className="errorDesc">{errors.number}</span>) : ``
     const errorDate = inputValues.month.trim()===`` || 
                       inputValues.year.trim()===`` ? 
                     (<span className="errorDesc" id="dateField">{errors.date}</span>) : ``
     const errorCvc = inputValues.cvc.trim()===`` ? 
                     (<span className="errorDesc" id="cvcField">{errors.cvc}</span>) : ``                
-
-    let inputClass = 'form-control';
 /*
     const getErrorMessage = () => {
         const errorFields = {};
@@ -129,27 +153,45 @@ export function Inputs() {
     const handleInputChange = (e) => {
     //destructured input element
     const { name, value } = e.target;
-        setInputValues({
-            ...inputValues,
-            [name]: value,
-        });
-    }
+
+    // Allow only numbers
+    const onlyNum = /^[0-9]*$/;
+
+    let numInputs = name === 'month' || 
+                    name === 'year' ||
+                    name === 'cvc';
     
+    if (numInputs) {
+        if (onlyNum.test(value)) {
+            setInputValues((prevValues) => ({
+                ...prevValues,
+                [name]: value
+            }));
+        }
+    }
+    else {
+        setInputValues((prevValues) => ({
+            ...prevValues,
+            [name]: value
+          })); 
+    }
+}
+    /*
     useEffect(() => {
         setErrors((inputValues) => ({
             ...inputValues,
             name:  {
                 nameEmpty:  errorName,
-                nameValue: 'Name must have more than one letter',
+                nameValue: '',
                 nameNumbers: 'Name cannot contain numbers',
             },
-            number: 'Wrong format, numbers only',
+            number: errorNumber,
             date: `Can't be blank`,
             cvc: `Can't be blank`
         }), console.log(inputValues.name)
     );
     },[inputValues]);
-    
+    */
     
 
     //Function to handle button click
@@ -175,13 +217,13 @@ export function Inputs() {
             <InputField errorDesc={errorNumber}>
                 <Label htmlFor='num'>CARD NUMBER</Label>
                 <Input 
-                  type="number"
+                  type='text'
                   placeholder="e.g. 1234 5678 9123 0000"
                   onChange={handleInputChange}
                   name='number'
-                  errorState={inputValues.number.trim() === '' ? `errorState` : ``}
+                  errorState={errorNumberInput}
                   value={inputValues.number}
-                  max={16}
+                  maxLength={16}
                 />
             </InputField>
             <InputField>
@@ -190,7 +232,7 @@ export function Inputs() {
                         <Label htmlFor='date'>EXP. DATE(MM/YY)</Label>
                         <InputField className="row" errorDesc={errorDate}>
                             <Input 
-                                type='number'
+                                type='text'
                                 placeholder="MM"
                                 col='col'
                                 margin='me-2'
@@ -198,27 +240,30 @@ export function Inputs() {
                                 name='month'
                                 errorState={inputValues.month.trim() === '' ? `errorState` : ``}
                                 value={inputValues.month}
+                                maxLength={2}
                             />
                             <Input 
-                                type='number'
+                                type='text'
                                 placeholder="YY"
                                 col='col'
                                 onChange={handleInputChange}
                                 name='year'
                                 errorState={inputValues.year.trim() === '' ? `errorState` : ``}
                                 value={inputValues.year}
+                                maxLength={2}
                             />
                         </InputField >
                     </InputField>
                     <InputField className="col">
                         <Label htmlFor='cvc'>CVC</Label>
                         <Input 
-                            type='number'
+                            type='text'
                             placeholder='e.g. 123'
                             onChange={handleInputChange}
                             name='cvc'
                             errorState={inputValues.cvc.trim() === '' ? `errorState` : ``}
                             value={inputValues.cvc}
+                            maxLength={3}
                         />
                         {errorCvc}
                     </InputField>
@@ -252,8 +297,8 @@ export function InputField({ className='mb-3', children, errorDesc }) {
 export function Input({
     name, value, type,
     errorState, col, margin, 
-    placeholder, onChange, 
-    min = null, max = null
+    placeholder, onChange,
+    maxLength = null
 
 }) {
     return (
@@ -264,8 +309,7 @@ export function Input({
             className={`form-control ${errorState} ${col} ${margin}`} 
             placeholder={placeholder}   
             onChange={onChange}
-            min={min}
-            max={max}
+            maxLength={maxLength}
         />
     );
 }
