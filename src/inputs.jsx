@@ -49,7 +49,7 @@ export function Inputs() {
       function testInputMoreValue(value) {
         return value.length === 1 ? true : false;
       }
-
+      //Must put null when conditions are not all filled
       function changeErrorBorder(
         condition1, condition2 = null, 
         condition3 = null, errorClass, finalresult) {
@@ -60,12 +60,17 @@ export function Inputs() {
         return numExp.test(value);
       }
       function testNumber(value) {
-        let onlyNumbers = /^[0-9]*$/gm;
+        let onlyNumbers = /[^0-9]/g;
         return onlyNumbers.test(value);
+      }
+      function testNumberLength(value) {
+        console.log(value.length);
+        return value.length !== 16 ? true : false;
       }
       //testNameIfNum(inputValues.name);
      // const test = testName(inputValues.name);
-      console.log(testNumber(inputValues.number));
+      //console.log(testNumber(inputValues.number));
+      //console.log(testNumberLength(inputValues.number));
       //const errorName = createTenary(testInputIfEmpty(inputValues.name), 
                                     //<ErrorField>Name is required</ErrorField>, ``)
       /*
@@ -97,7 +102,9 @@ export function Inputs() {
             testInputIfEmpty(inputValues.number),
             <ErrorField>Card number is required</ErrorField>,
             testNumber(inputValues.number),
-            <ErrorField>Wrong format, numbers only</ErrorField>,``);
+            <ErrorField>Wrong format, numbers only</ErrorField>,
+            testNumberLength(inputValues.number),
+            <ErrorField>Card number must have 16 digits</ErrorField>, ``);
         /*
         let errorNumberInput = 
         testInputIfEmpty(inputValues.number) || testNumber(inputValues.number) || null
@@ -105,8 +112,16 @@ export function Inputs() {
         */
         let errorNumberInput = changeErrorBorder(
             testInputIfEmpty(inputValues.number),
-            testNumber(inputValues.number), null,
+            testNumber(inputValues.number), testNumberLength(inputValues.number),
             `errorState`, ``);
+
+        let errorDate = createTenary(
+            testInputIfEmpty(inputValues.month) && testInputIfEmpty(inputValues.year),
+            <ErrorField id='dateField'>Can't be blank</ErrorField>,
+            testInputIfEmpty(inputValues.month),
+            <ErrorField id='dateField'>MM can't be blank</ErrorField>,
+            testInputIfEmpty(inputValues.year),
+            <ErrorField id='dateField'>YY can't be blank</ErrorField>, ``);
         
         /*
         changeErrorBorder(
@@ -123,9 +138,9 @@ export function Inputs() {
     //console.log(errorDesc.name);
     //const errorNumber = inputValues.number.trim()===`` ?  
                     //(<span className="errorDesc">{errors.number}</span>) : ``
-    const errorDate = inputValues.month.trim()===`` || 
-                      inputValues.year.trim()===`` ? 
-                    (<span className="errorDesc" id="dateField">{errors.date}</span>) : ``
+    //const errorDate = inputValues.month.trim()===`` || 
+                      //inputValues.year.trim()===`` ? 
+                    //(<span className="errorDesc" id="dateField">{errors.date}</span>) : ``
     const errorCvc = inputValues.cvc.trim()===`` ? 
                     (<span className="errorDesc" id="cvcField">{errors.cvc}</span>) : ``                
 /*
@@ -320,8 +335,8 @@ export function Label({ htmlFor, children }) {
     );
 }
 
-export function ErrorField({children}) {
+export function ErrorField({id = null, children}) {
     return (
-        <span className="errorDesc">{children}</span>
+        <span className="errorDesc" id={id}>{children}</span>
     );
 }
