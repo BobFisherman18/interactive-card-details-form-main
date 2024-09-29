@@ -63,9 +63,9 @@ export function Inputs() {
         let onlyNumbers = /[^0-9]/g;
         return onlyNumbers.test(value);
       }
-      function testNumberLength(value) {
+      function testNumberLength(value, length) {
         console.log(value.length);
-        return value.length !== 16 ? true : false;
+        return value.length !== length ? true : false;
       }
       //testNameIfNum(inputValues.name);
      // const test = testName(inputValues.name);
@@ -103,7 +103,7 @@ export function Inputs() {
             <ErrorField>Card number is required</ErrorField>,
             testNumber(inputValues.number),
             <ErrorField>Wrong format, numbers only</ErrorField>,
-            testNumberLength(inputValues.number),
+            testNumberLength(inputValues.number, 16),
             <ErrorField>Card number must have 16 digits</ErrorField>, ``);
         /*
         let errorNumberInput = 
@@ -123,6 +123,17 @@ export function Inputs() {
             testInputIfEmpty(inputValues.year),
             <ErrorField id='dateField'>YY can't be blank</ErrorField>, ``);
         
+        let errorCvc = createTenary(
+            testInputIfEmpty(inputValues.cvc),
+            <ErrorField id='cvcField'>Can't be blank</ErrorField>, 
+            testNumberLength(inputValues.cvc, 3),
+            <ErrorField id='cvcField'>Must have 3 digits</ErrorField>, ``);
+
+        let errorCvcInput = changeErrorBorder(
+            testInputIfEmpty(inputValues.cvc),
+            testNumberLength(inputValues.cvc, 3),
+            null, 'errorState', ``);
+        
         /*
         changeErrorBorder(
             testInputIfEmpty(inputValues.number), 
@@ -141,8 +152,8 @@ export function Inputs() {
     //const errorDate = inputValues.month.trim()===`` || 
                       //inputValues.year.trim()===`` ? 
                     //(<span className="errorDesc" id="dateField">{errors.date}</span>) : ``
-    const errorCvc = inputValues.cvc.trim()===`` ? 
-                    (<span className="errorDesc" id="cvcField">{errors.cvc}</span>) : ``                
+    //const errorCvc = inputValues.cvc.trim()===`` ? 
+                    //(<span className="errorDesc" id="cvcField">{errors.cvc}</span>) : ``                
 /*
     const getErrorMessage = () => {
         const errorFields = {};
@@ -276,7 +287,7 @@ export function Inputs() {
                             placeholder='e.g. 123'
                             onChange={handleInputChange}
                             name='cvc'
-                            errorState={inputValues.cvc.trim() === '' ? `errorState` : ``}
+                            errorState={errorCvcInput}
                             value={inputValues.cvc}
                             maxLength={3}
                         />
