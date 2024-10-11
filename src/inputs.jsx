@@ -51,8 +51,10 @@ export function Inputs() {
       }
       //Must put null when conditions are not all filled
       function changeErrorBorder(
-        condition1, condition2 = null, 
-        condition3 = null, errorClass, finalresult) {
+        condition1, 
+        condition2 = null, 
+        condition3 = null, 
+        errorClass, finalresult) {
         return condition1 || condition2 || condition3 ? errorClass : finalresult;
       }
       function testName(value) {
@@ -64,23 +66,15 @@ export function Inputs() {
         return onlyNumbers.test(value);
       }
       function testNumberLength(value, length) {
-        console.log(value.length);
+        //console.log(value.length);
         return value.length !== length ? true : false;
       }
-      //testNameIfNum(inputValues.name);
-     // const test = testName(inputValues.name);
-      //console.log(testNumber(inputValues.number));
-      //console.log(testNumberLength(inputValues.number));
-      //const errorName = createTenary(testInputIfEmpty(inputValues.name), 
-                                    //<ErrorField>Name is required</ErrorField>, ``)
-      /*
-      const errorName = testInputIfEmpty(inputValues.name)
-                        ? (<ErrorField>Name is Required</ErrorField>) 
-                        : testInputMoreValue(inputValues.name)
-                        ? (<ErrorField>Name must 
-                            have more than one letter</ErrorField>)
-                        : ``;
-      */
+
+      function testNumberYear(value) {
+        console.log(Number(value));
+      }
+
+      testNumberYear(inputValues.month);
         let errorName = createTenary(
             testInputIfEmpty(inputValues.name), 
             <ErrorField>Name is required</ErrorField>,
@@ -228,78 +222,80 @@ export function Inputs() {
     
     return (
         <section id="inputs" className="mx-4">
-            <InputField 
-            errorDesc={errorName}>
-                <Label htmlFor='name'>CARDHOLDER NAME</Label>
-                <Input 
-                    type="text"
-                    placeholder="e.g. Jane Appleseed"
+            <form>
+                <InputField 
+                errorDesc={errorName}>
+                    <Label htmlFor='name'>CARDHOLDER NAME</Label>
+                    <Input 
+                        type="text"
+                        placeholder="e.g. Jane Appleseed"
+                        onChange={handleInputChange}
+                        name='name'
+                        errorState={errorNameInput}
+                        value={inputValues.name}
+                    />
+                </InputField>
+                <InputField errorDesc={errorNumber}>
+                    <Label htmlFor='num'>CARD NUMBER</Label>
+                    <Input 
+                    type='text'
+                    placeholder="e.g. 1234 5678 9123 0000"
                     onChange={handleInputChange}
-                    name='name'
-                    errorState={errorNameInput}
-                    value={inputValues.name}
-                />
-            </InputField>
-            <InputField errorDesc={errorNumber}>
-                <Label htmlFor='num'>CARD NUMBER</Label>
-                <Input 
-                  type='text'
-                  placeholder="e.g. 1234 5678 9123 0000"
-                  onChange={handleInputChange}
-                  name='number'
-                  errorState={errorNumberInput}
-                  value={inputValues.number}
-                  maxLength={16}
-                />
-            </InputField>
-            <InputField>
-                <InputField className="row">
-                    <InputField className="col">
-                        <Label htmlFor='date'>EXP. DATE(MM/YY)</Label>
-                        <InputField className="row" errorDesc={errorDate}>
+                    name='number'
+                    errorState={errorNumberInput}
+                    value={inputValues.number}
+                    maxLength={16}
+                    />
+                </InputField>
+                <InputField>
+                    <InputField className="row">
+                        <InputField className="col">
+                            <Label htmlFor='date'>EXP. DATE(MM/YY)</Label>
+                            <InputField className="row" errorDesc={errorDate}>
+                                <Input 
+                                    type='text'
+                                    placeholder="MM"
+                                    col='col'
+                                    margin='me-2'
+                                    onChange={handleInputChange}
+                                    name='month'
+                                    errorState={inputValues.month.trim() === '' ? `errorState` : ``}
+                                    value={inputValues.month}
+                                    maxLength={2}
+                                />
+                                <Input 
+                                    type='text'
+                                    placeholder="YY"
+                                    col='col'
+                                    onChange={handleInputChange}
+                                    name='year'
+                                    errorState={inputValues.year.trim() === '' ? `errorState` : ``}
+                                    value={inputValues.year}
+                                    maxLength={2}
+                                />
+                            </InputField >
+                        </InputField>
+                        <InputField className="col">
+                            <Label htmlFor='cvc'>CVC</Label>
                             <Input 
                                 type='text'
-                                placeholder="MM"
-                                col='col'
-                                margin='me-2'
+                                placeholder='e.g. 123'
                                 onChange={handleInputChange}
-                                name='month'
-                                errorState={inputValues.month.trim() === '' ? `errorState` : ``}
-                                value={inputValues.month}
-                                maxLength={2}
+                                name='cvc'
+                                errorState={errorCvcInput}
+                                value={inputValues.cvc}
+                                maxLength={3}
                             />
-                            <Input 
-                                type='text'
-                                placeholder="YY"
-                                col='col'
-                                onChange={handleInputChange}
-                                name='year'
-                                errorState={inputValues.year.trim() === '' ? `errorState` : ``}
-                                value={inputValues.year}
-                                maxLength={2}
-                            />
-                        </InputField >
-                    </InputField>
-                    <InputField className="col">
-                        <Label htmlFor='cvc'>CVC</Label>
-                        <Input 
-                            type='text'
-                            placeholder='e.g. 123'
-                            onChange={handleInputChange}
-                            name='cvc'
-                            errorState={errorCvcInput}
-                            value={inputValues.cvc}
-                            maxLength={3}
-                        />
-                        {errorCvc}
+                            {errorCvc}
+                        </InputField>
                     </InputField>
                 </InputField>
-            </InputField>
-            <InputField className="d-grid">
-                <Button margin='my-3'onClick={handleButtonClick}>
-                    Confirm   
-                </Button> 
-            </InputField>
+                <InputField className="d-grid">
+                    <Button margin='my-3'onClick={handleButtonClick}>
+                        Confirm   
+                    </Button> 
+                </InputField>
+            </form>
         </section>
     );
 }
