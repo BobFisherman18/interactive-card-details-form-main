@@ -3,7 +3,7 @@ import cardFront from './images/bg-card-front.png';
 import mobile from './images/bg-main-mobile.png';
 import desktop from './images/bg-main-desktop.png';
 import { CardNumbers } from './card-numbers.jsx';
-import { CvcNumbers } from './card-numbers.jsx'
+import { CvcNumbers } from './card-numbers.jsx';
 
 
 export function Cards() {

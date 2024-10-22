@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext, useRef, forwardRef } from "react";
+import React, { useState, createContext, useEffect, useContext, useRef, forwardRef } from "react";
 
-export function Inputs() {
+export const InputsContext = createContext();
 
-    const [isThereError, setIsThereError] = useState(false);
-   //const [handleInputChange, setHandleInputChange] = useState();
-
+export function InputsProvider({children}) {
     const [inputValues, setInputValues] = useState({
         name:'',
         number: '',
@@ -13,24 +11,55 @@ export function Inputs() {
         cvc: ''
       });
 
-    const [errors, setErrors] = useState({
-        name:  {
-            nameEmpty: '',
-            nameValue: '',
-            nameNumbers: '',
-        },
-        number: '',
-        date: ``,
-        cvc: ''
-      });
+    // Function to handle input change
+    const handleInputChange = (e) => {
+        //destructured input element
+        const { name, value } = e.target;
+    
+        // Allow only numbers
+        const onlyNum = /^[0-9]*$/;
+    
+        let numInputs = name === 'month' || 
+                        name === 'year' ||
+                        name === 'cvc';
+        
+        if (numInputs) {
+            if (onlyNum.test(value)) {
+                setInputValues((prevValues) => ({
+                    ...prevValues,
+                    [name]: value
+                }));
+            }
+        }
+        else {
+            setInputValues((prevValues) => ({
+                ...prevValues,
+                [name]: value
+              })); 
+        }
+    }
 
-    const [errorDesc, setErrorDesc] = useState({
-        name: '',
+      return (
+        <InputsContext.Provider value={{inputValues, handleInputChange}}>
+            {children}
+        </InputsContext.Provider>
+      );
+}
+
+
+export function Inputs() {
+
+    const { inputValues, handleInputChange } = useContext(InputsContext);
+    /*
+    const [inputValues, setInputValues] = useState({
+        name:'',
         number: '',
         month: '',
         year: '',
         cvc: ''
-    });
+      });
+      */
+
       function testInputIfEmpty(value) {
         return value.trim() === `` ? true : false;
       }
@@ -74,7 +103,7 @@ export function Inputs() {
         console.log(Number(value));
       }
 
-      testNumberYear(inputValues.month);
+      //testNumberYear(inputValues.month);
         let errorName = createTenary(
             testInputIfEmpty(inputValues.name), 
             <ErrorField>Name is required</ErrorField>,
@@ -99,11 +128,7 @@ export function Inputs() {
             <ErrorField>Wrong format, numbers only</ErrorField>,
             testNumberLength(inputValues.number, 16),
             <ErrorField>Card number must have 16 digits</ErrorField>, ``);
-        /*
-        let errorNumberInput = 
-        testInputIfEmpty(inputValues.number) || testNumber(inputValues.number) || null
-        ? 'errorState': ``;
-        */
+
         let errorNumberInput = changeErrorBorder(
             testInputIfEmpty(inputValues.number),
             testNumber(inputValues.number), testNumberLength(inputValues.number),
@@ -128,48 +153,9 @@ export function Inputs() {
             testNumberLength(inputValues.cvc, 3),
             null, 'errorState', ``);
         
-        /*
-        changeErrorBorder(
-            testInputIfEmpty(inputValues.number), 
-            testNumber(inputValues.number), 
-            'errorState', ``);
-            console.log(errorNameInput);
-            */
-            
-
-
-
-    //console.log(errorName);
-    //console.log(errorDesc.name);
-    //const errorNumber = inputValues.number.trim()===`` ?  
-                    //(<span className="errorDesc">{errors.number}</span>) : ``
-    //const errorDate = inputValues.month.trim()===`` || 
-                      //inputValues.year.trim()===`` ? 
-                    //(<span className="errorDesc" id="dateField">{errors.date}</span>) : ``
-    //const errorCvc = inputValues.cvc.trim()===`` ? 
-                    //(<span className="errorDesc" id="cvcField">{errors.cvc}</span>) : ``                
-/*
-    const getErrorMessage = () => {
-        const errorFields = {};
-        const areInputsEmpty = Object.values(inputValues).some(value => value === ``);
-        console.log(areInputsEmpty);
-        if(areInputsEmpty) {
-            console.log(inputValues);
-            if(inputValues.name === ``){
-                //errorFields.name = errors.name.nameEmpty;
-            }
-            else if (inputValues.name.length === 1) {
-                errorFields.name = <ErrorField>{errors.name.nameValue}</ErrorField>;
-                console.log(errorFields);
-            }
-         }
-         //return errorFields;
-    }
-         */  
-    //const errorDescription = getErrorMessage();
-    //console.log(errorDescription.name);
-
+       
     // Function to handle input change
+    /*
     const handleInputChange = (e) => {
     //destructured input element
     const { name, value } = e.target;
@@ -196,6 +182,7 @@ export function Inputs() {
           })); 
     }
 }
+    */
     /*
     useEffect(() => {
         setErrors((inputValues) => ({

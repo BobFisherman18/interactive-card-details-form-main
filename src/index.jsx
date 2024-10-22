@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import { Cards } from './bg-cards.jsx';
 import { Inputs } from './inputs.jsx';
+import { InputsProvider } from './inputs.jsx';
 import './css/interactive-card.css';
 import React, { useState, useEffect, useContext, useRef, forwardRef } from "react";
 
@@ -28,8 +29,10 @@ function MyComponent() {
     return (
       <React.StrictMode>
         <main className='container-fluid-md'>
-          <Cards />
-          <Inputs />
+          <InputsProvider>
+            <Cards />
+            <Inputs />
+          </InputsProvider>
           <div>
           Thank you!
           We've added your card details
