@@ -154,35 +154,6 @@ export function Inputs() {
             null, 'errorState', ``);
         
        
-    // Function to handle input change
-    /*
-    const handleInputChange = (e) => {
-    //destructured input element
-    const { name, value } = e.target;
-
-    // Allow only numbers
-    const onlyNum = /^[0-9]*$/;
-
-    let numInputs = name === 'month' || 
-                    name === 'year' ||
-                    name === 'cvc';
-    
-    if (numInputs) {
-        if (onlyNum.test(value)) {
-            setInputValues((prevValues) => ({
-                ...prevValues,
-                [name]: value
-            }));
-        }
-    }
-    else {
-        setInputValues((prevValues) => ({
-            ...prevValues,
-            [name]: value
-          })); 
-    }
-}
-    */
     /*
     useEffect(() => {
         setErrors((inputValues) => ({
@@ -236,7 +207,7 @@ export function Inputs() {
                 </InputField>
                 <InputField>
                     <InputField className="row">
-                        <InputField className="col">
+                        <InputField className="col" id='dateField'>
                             <Label htmlFor='date'>EXP. DATE(MM/YY)</Label>
                             <InputField className="row" errorDesc={errorDate}>
                                 <Input 
@@ -262,7 +233,7 @@ export function Inputs() {
                                 />
                             </InputField >
                         </InputField>
-                        <InputField className="col">
+                        <InputField className="col" id='cvcField'>
                             <Label htmlFor='cvc'>CVC</Label>
                             <Input 
                                 type='text'
@@ -277,7 +248,7 @@ export function Inputs() {
                         </InputField>
                     </InputField>
                 </InputField>
-                <InputField className="d-grid">
+                <InputField className="d-grid" id='confirmField'>
                     <Button margin='my-3'onClick={handleButtonClick}>
                         Confirm   
                     </Button> 
@@ -291,10 +262,10 @@ export function Button({ margin, onClick, children }) {
         <button className={`btn ${margin}`} onClick={onClick}>{children}</button>
     );
 }
-export function InputField({ className='mb-3', children, errorDesc }) {
+export function InputField({ className='mb-3', children, id=null, errorDesc }) {
     return (
     <>
-        <div className={className}>
+        <div className={className} id={id}>
             {children}
         </div>
         {errorDesc}

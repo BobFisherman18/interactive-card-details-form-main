@@ -125,3 +125,20 @@ body {
         }
     }
 }
+@media screen and (min-width: 375px) {
+    input {
+        max-width: 326px;
+    }
+    input[name='month'], input[name='year'] {
+        max-width: 77.75px;
+    }
+    input[name='cvc'] {
+        max-width: 151.5px;
+    }
+    #cvcField, #dateField {
+        max-width: 175.5px;
+    }
+    #confirmField {
+        max-width: 327px;
+    }
+}
