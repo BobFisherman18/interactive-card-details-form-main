@@ -6,15 +6,15 @@ body #cards {
 }
 body #cards #cardBack {
   width: 75%;
-  position: fixed;
-  inset: 30px 0 0 75px;
+  position: absolute;
+  inset: -210px 0 0 75px;
   max-width: 281.25px;
 }
 body #cards #cardFront {
   width: 75%;
   max-width: 281.25px;
-  position: fixed;
-  inset: 115px 0 0 16px;
+  position: absolute;
+  inset: -123px 0 0 16px;
 }
 body #cards #cvc {
   color: hsl(0, 0%, 100%);
@@ -124,5 +124,12 @@ body .attribution a {
   }
   #confirmField {
     max-width: 327px;
+  }
+}
+@media screen and (min-width: 376px) {
+  #root {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
   }
 }

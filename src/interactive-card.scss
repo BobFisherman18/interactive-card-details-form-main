@@ -23,15 +23,15 @@ body {
         margin-bottom: 70px;
         #cardBack {
             width: 75%;
-            position: fixed;
-            inset: 30px 0 0 75px;
+            position: absolute;
+            inset: -210px 0 0 75px;
             max-width: $max-width-cards;
         }
         #cardFront {
             width: 75%;
             max-width: $max-width-cards;
-            position: fixed;
-            inset: 115px 0 0 16px;
+            position: absolute;
+            inset: -123px 0 0 16px;
         }
         #cvc {
             color: $white;
@@ -140,5 +140,12 @@ body {
     }
     #confirmField {
         max-width: 327px;
+    }
+}
+@media screen and (min-width: 376px) {
+    #root {
+        display: flex;
+        justify-content: center;  /* Center horizontally */
+        align-items: center;      /* Center vertically */
     }
 }

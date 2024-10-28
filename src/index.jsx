@@ -28,7 +28,7 @@ function MyComponent() {
   export default function MyApp() {
     return (
       <React.StrictMode>
-        <main className='container-fluid-md'>
+        <main className='container-fluid-lg'>
           <InputsProvider>
             <Cards />
             <Inputs />
