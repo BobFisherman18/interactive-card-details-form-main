@@ -5,6 +5,7 @@ import { InputsProvider } from './inputs.jsx';
 import './css/interactive-card.css';
 import React, { useState, useEffect, useContext, useRef, forwardRef } from "react";
 
+/*
 function MyComponent() {
   const [count, setCount] = useState(0);
   const [text, setText] = useState('');
@@ -24,6 +25,7 @@ function MyComponent() {
     </div>
   );
 }
+  */
   
   export default function MyApp() {
     return (
@@ -33,12 +35,15 @@ function MyComponent() {
             <Cards />
             <Inputs />
           </InputsProvider>
+          {/*
           <div>
           Thank you!
           We've added your card details
           Continue
           </div>
+          
           <MyComponent />
+          */}
         </main>
       </React.StrictMode>
     );

@@ -10,8 +10,8 @@ export function Cards() {
     return (
       <section id='cards'>
         <picture>
-          <img src={mobile}alt='bg-mobile' className='img-fluid' id='bg-mobile'/>
-          <source media='(min-width:768px)' srcSet={desktop} />
+          <source media='(min-width: 576px)' srcSet={desktop} />
+          <img src={mobile} alt='bg-mobile' className='img-fluid' id='bg-mobile'/>
         </picture>
         <div className='position-relative'>
           <img src={cardBack} alt='bg-card-back' id='cardBack'/>

@@ -149,3 +149,33 @@ body {
         align-items: center;      /* Center vertically */
     }
 }
+@media screen and (min-width: 576px) {
+    .container-fluid-lg {
+        display: flex;
+        #cards {
+            #cardBack {
+                top: -300px;
+                left: 30px;
+                width: 100%;
+            }
+            #cvc {
+                top: -232px;
+                left: 252px;
+            }
+            #cardFront {
+               top: -475px; 
+               left: 20px;
+               width: 100%;
+            }
+            #numbers {
+                top: -458px;
+            }
+        }
+        #cards {
+            margin-bottom: 0;
+        }
+        #inputs {
+            margin-top: 90px;
+        }
+    }
+}
