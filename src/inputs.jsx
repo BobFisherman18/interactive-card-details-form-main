@@ -59,7 +59,7 @@ export function Inputs() {
         // Set margin to the current window width
         if (window.innerWidth >= 576) {
             setMarginClass(!marginClass);
-            setMargin(margin => (margin < 60 ? margin + 1 : margin));
+            setMargin(margin => (margin < 60 ? margin + 1  : margin));
         } else {
             setMarginClass(marginClass);
             setMargin(24);
