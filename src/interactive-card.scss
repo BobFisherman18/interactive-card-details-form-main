@@ -175,7 +175,14 @@ body {
             margin-bottom: 0;
         }
         #inputs {
-            margin-top: 90px;
+            //margin-left: 60px !important;
+            #dateAndCvcField {
+                flex-direction: column;
+            }
+            .errorDesc {
+                display: inline-block;
+                max-width: 130px;
+            }
         }
     }
 }

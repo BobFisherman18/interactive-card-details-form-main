@@ -50,15 +50,36 @@ export function InputsProvider({children}) {
 export function Inputs() {
 
     const { inputValues, handleInputChange } = useContext(InputsContext);
-    /*
-    const [inputValues, setInputValues] = useState({
-        name:'',
-        number: '',
-        month: '',
-        year: '',
-        cvc: ''
-      });
-      */
+    const [margin, setMargin] = useState(24);
+    const [marginClass, setMarginClass] = useState(true);
+
+
+    useEffect(() => {
+      const handleResize = () => {
+        // Set margin to the current window width
+        if (window.innerWidth >= 576) {
+            setMarginClass(!marginClass);
+            setMargin(margin => (margin < 60 ? margin + 1 : margin));
+        } else {
+            setMarginClass(marginClass);
+            setMargin(24);
+        }
+      };
+  
+      window.addEventListener('resize', handleResize);
+      
+      // Cleanup event listener on component unmount
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    
+    useEffect(() => {
+        console.log(margin);
+        if (margin === 60) {
+            setMargin(60);
+        }
+    }, [margin]);
+  
 
       function testInputIfEmpty(value) {
         return value.trim() === `` ? true : false;
@@ -111,7 +132,7 @@ export function Inputs() {
             <ErrorField>Name must have more 
             than one letter</ErrorField>, 
             testName(inputValues.name),
-            <ErrorField>Name cannot contain 
+            <ErrorField> Cannot contain 
             numbers or special characters
             </ErrorField>, ``);
 
@@ -131,7 +152,7 @@ export function Inputs() {
 
         let errorNumberInput = changeErrorBorder(
             testInputIfEmpty(inputValues.number),
-            testNumber(inputValues.number), testNumberLength(inputValues.number),
+            testNumber(inputValues.number), testNumberLength(inputValues.number, 16),
             `errorState`, ``);
 
         let errorDate = createTenary(
@@ -154,24 +175,6 @@ export function Inputs() {
             null, 'errorState', ``);
         
        
-    /*
-    useEffect(() => {
-        setErrors((inputValues) => ({
-            ...inputValues,
-            name:  {
-                nameEmpty:  errorName,
-                nameValue: '',
-                nameNumbers: 'Name cannot contain numbers',
-            },
-            number: errorNumber,
-            date: `Can't be blank`,
-            cvc: `Can't be blank`
-        }), console.log(inputValues.name)
-    );
-    },[inputValues]);
-    */
-    
-
     //Function to handle button click
     const handleButtonClick = () => {
         console.log(isThereError);
@@ -179,7 +182,10 @@ export function Inputs() {
     };
     
     return (
-        <section id="inputs" className="mx-4">
+        <section 
+        id="inputs" 
+        className={marginClass ? 'mx-4' : ``} 
+        style={{margin: `90px ${margin}px 0` }}>
             <form>
                 <InputField 
                 errorDesc={errorName}>
@@ -206,7 +212,7 @@ export function Inputs() {
                     />
                 </InputField>
                 <InputField>
-                    <InputField className="row">
+                    <InputField className="row" id='dateAndCvcField'>
                         <InputField className="col" id='dateField'>
                             <Label htmlFor='date'>EXP. DATE(MM/YY)</Label>
                             <InputField className="row" errorDesc={errorDate}>

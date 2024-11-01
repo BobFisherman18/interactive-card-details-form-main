@@ -157,7 +157,11 @@ body .attribution a {
   .container-fluid-lg #cards {
     margin-bottom: 0;
   }
-  .container-fluid-lg #inputs {
-    margin-top: 90px;
+  .container-fluid-lg #inputs #dateAndCvcField {
+    flex-direction: column;
+  }
+  .container-fluid-lg #inputs .errorDesc {
+    display: inline-block;
+    max-width: 130px;
   }
 }
