@@ -50,6 +50,7 @@ body #cards #numbers div {
   letter-spacing: 2px;
 }
 body #inputs {
+  margin-top: 40px;
   /* Chrome, Safari, Edge, Opera: hide arrows */
   /* Firefox: hide arrows */
 }
@@ -157,6 +158,13 @@ body .attribution a {
   .container-fluid-lg #cards {
     margin-bottom: 0;
   }
+  .container-fluid-lg #cards #bg-mobile {
+    max-width: 346.55px !important;
+  }
+  .container-fluid-lg #inputs {
+    margin-top: 90px;
+    max-width: 179.45px !important;
+  }
   .container-fluid-lg #inputs #dateAndCvcField {
     flex-direction: column;
   }
@@ -165,3 +173,12 @@ body .attribution a {
     max-width: 130px;
   }
 }
+/*
+@media screen and (min-width: 611px) {
+    #cards {
+        #cvcNumbersField, #cardNumbersField {
+            max-width: 325px;
+        }
+    }
+}
+    */

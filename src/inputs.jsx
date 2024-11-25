@@ -51,18 +51,33 @@ export function Inputs() {
 
     const { inputValues, handleInputChange } = useContext(InputsContext);
     const [margin, setMargin] = useState(24);
+    const [marginLeft, setMarginLeft] = useState(24);
+    const [marginRight, setMarginRight] = useState(24);
+    const [padding, setPadding] = useState(0);
     const [marginClass, setMarginClass] = useState(true);
 
-
+    
     useEffect(() => {
       const handleResize = () => {
         // Set margin to the current window width
-        if (window.innerWidth >= 576) {
+        if (window.innerWidth >= 611) {
             setMarginClass(!marginClass);
-            setMargin(margin => (margin < 60 ? margin + 1  : margin));
-        } else {
+            //setMargin(60);
+            setMarginLeft(marginLeft => (marginLeft < 90 ? marginLeft + 1 : marginLeft));
+            setMarginRight(60);
+            //setPadding(36);
+        }
+        else if (window.innerWidth >= 576) {
+            setMarginClass(!marginClass);
+            setMarginLeft(marginLeft => (marginLeft < 120 ? marginLeft + 1 : marginLeft));
+            setMarginRight(marginRight => (marginRight < 60 ? marginRight + 1 : marginRight));
+            //setPadding(padding => (padding < 60 ? padding + 1 : padding));
+        }
+        else {
             setMarginClass(marginClass);
-            setMargin(24);
+            setMarginLeft(marginLeft); 
+            setMarginRight(marginRight);
+            //setPadding(padding);
         }
       };
   
@@ -75,9 +90,13 @@ export function Inputs() {
     
     useEffect(() => {
         console.log(margin);
-        if (margin === 60) {
-            setMargin(60);
+        const setResize = () => {
+            if (window.innerWidth >= 611) {
+                setMargin(60);
+            }
         }
+        window.addEventListener('resize', setResize);
+        return () => window.removeEventListener('resize', setResize);
     }, [margin]);
   
 
@@ -185,7 +204,11 @@ export function Inputs() {
         <section 
         id="inputs" 
         className={marginClass ? 'mx-4' : ``} 
-        style={{margin: `90px ${margin}px 0` }}>
+        style={{marginLeft: `${marginLeft}px`, 
+                marginRight: `${marginRight}px`,
+                //paddingLeft: `${padding}px`,
+                //paddingRight: `${padding}px`
+                }}>
             <form>
                 <InputField 
                 errorDesc={errorName}>

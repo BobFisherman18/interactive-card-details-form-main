@@ -68,6 +68,7 @@ body {
         }
     }
     #inputs {
+        margin-top: 40px;
         .form-label {
             color: $darkViolet;
             font-weight: 500;
@@ -173,8 +174,13 @@ body {
         }
         #cards {
             margin-bottom: 0;
+            #bg-mobile {
+                max-width: 346.55px !important;
+            }
         }
         #inputs {
+            margin-top: 90px;
+            max-width: 179.45px !important;
             //margin-left: 60px !important;
             #dateAndCvcField {
                 flex-direction: column;
@@ -186,3 +192,12 @@ body {
         }
     }
 }
+/*
+@media screen and (min-width: 611px) {
+    #cards {
+        #cvcNumbersField, #cardNumbersField {
+            max-width: 325px;
+        }
+    }
+}
+    */
