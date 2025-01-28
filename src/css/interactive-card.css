@@ -163,7 +163,7 @@ body .attribution a {
   }
   .container-fluid-lg #inputs {
     margin-top: 90px;
-    max-width: 179.45px !important;
+    max-width: 400px !important;
   }
   .container-fluid-lg #inputs #dateAndCvcField {
     flex-direction: column;
@@ -171,6 +171,40 @@ body .attribution a {
   .container-fluid-lg #inputs .errorDesc {
     display: inline-block;
     max-width: 130px;
+  }
+}
+@media screen and (min-width: 677px) {
+  #inputs #dateAndCvcField {
+    flex-direction: row !important;
+    /*
+    #cvcField {
+        position: relative;
+        top: 20px;
+    }
+    */
+  }
+  #inputs #dateAndCvcField label[for=cvc] {
+    position: relative;
+    top: 15px;
+  }
+  #inputs #dateAndCvcField input[name=cvc] {
+    position: relative;
+    top: 36px;
+  }
+  #inputs #dateAndCvcField span[id=cvcField] {
+    position: relative;
+    top: 36px;
+  }
+}
+@media screen and (min-width: 734px) {
+  label[for=cvc] {
+    top: 5px !important;
+  }
+  input[name=cvc] {
+    top: 16px !important;
+  }
+  span[id=cvcField] {
+    top: 16px !important;
   }
 }
 /*

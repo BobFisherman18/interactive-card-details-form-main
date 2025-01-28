@@ -55,11 +55,50 @@ export function Inputs() {
     const [marginRight, setMarginRight] = useState(24);
     const [padding, setPadding] = useState(0);
     const [marginClass, setMarginClass] = useState(true);
+    let previousWidth = window.innerWidth;
 
     
     useEffect(() => {
       const handleResize = () => {
+
+        const currentWidth = window.innerWidth;
+        if(window.innerWidth >= 576) {
+            setMarginClass(!marginClass);
+            /*
+            previousWidth = currentWidth;
+            setMarginClass(marginClass);
+            setMarginLeft(marginLeft); 
+            setMarginRight(marginRight);
+            */
+        } else {
+            setMarginClass(marginClass);
+            setMarginLeft(24);
+        }
+
+        if (currentWidth > previousWidth) {
+            console.log('Width increased');
+            console.log(currentWidth);
+            console.log(previousWidth);
+
+            //setMargin(60);
+            setMarginLeft(marginLeft => (marginLeft < 90 ? marginLeft + 1 : marginLeft));
+            setMarginRight(60);
+            //setPadding(36);
+        } else if (currentWidth < previousWidth) {
+            console.log('Width decreased');
+            console.log(currentWidth);
+            console.log(previousWidth);
+
+            //setMargin(60);
+            setMarginLeft(marginLeft => (marginLeft < 90 ? marginLeft + 1 : marginLeft));
+            setMarginRight(60);
+            //setPadding(36);
+        }
+
+
+
         // Set margin to the current window width
+        /*
         if (window.innerWidth >= 611) {
             setMarginClass(!marginClass);
             //setMargin(60);
@@ -67,18 +106,21 @@ export function Inputs() {
             setMarginRight(60);
             //setPadding(36);
         }
+        
         else if (window.innerWidth >= 576) {
             setMarginClass(!marginClass);
             setMarginLeft(marginLeft => (marginLeft < 120 ? marginLeft + 1 : marginLeft));
             setMarginRight(marginRight => (marginRight < 60 ? marginRight + 1 : marginRight));
             //setPadding(padding => (padding < 60 ? padding + 1 : padding));
         }
+        
         else {
             setMarginClass(marginClass);
             setMarginLeft(marginLeft); 
             setMarginRight(marginRight);
             //setPadding(padding);
         }
+            */
       };
   
       window.addEventListener('resize', handleResize);

@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom/client';
 import { Cards } from './bg-cards.jsx';
 import { Inputs } from './inputs.jsx';
 import { InputsProvider } from './inputs.jsx';
+import axios from 'axios';
 import './css/interactive-card.css';
 import React, { useState, useEffect, useContext, useRef, forwardRef } from "react";
 
@@ -28,6 +29,16 @@ function MyComponent() {
   */
   
   export default function MyApp() {
+
+    const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        // Fetch data from the backend
+        axios.get('http://localhost:9000/api/message')
+            .then((response) => setMessage(response.data.message))
+            .catch((error) => console.error('Error fetching data:', error));
+    }, []);
+
     return (
       <React.StrictMode>
         <main className='container-fluid-lg'>
@@ -35,6 +46,7 @@ function MyComponent() {
             <Cards />
             <Inputs />
           </InputsProvider>
+          {/*<p>{message || 'Loading...'}</p>*/}
           {/*
           <div>
           Thank you!

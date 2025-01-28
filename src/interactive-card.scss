@@ -13,7 +13,7 @@ $s-font: 13px;
 $xs-font: 9px;
 $letter-space: 2px;
 $xs-letter-space: 1px;
-$weight: 500;
+$weight: 500;   
 
 //width values
 $max-width-cards: 281.25px;
@@ -180,7 +180,7 @@ body {
         }
         #inputs {
             margin-top: 90px;
-            max-width: 179.45px !important;
+            max-width: 400px !important;
             //margin-left: 60px !important;
             #dateAndCvcField {
                 flex-direction: column;
@@ -190,6 +190,43 @@ body {
                 max-width: 130px;
             }
         }
+    }
+}
+
+@media screen and (min-width: 677px) {
+    #inputs {
+        #dateAndCvcField {
+            flex-direction: row !important;
+            /*
+            #cvcField {
+                position: relative;
+                top: 20px;
+            }
+            */
+            label[for="cvc"] {
+                position: relative;
+                top: 15px;
+            }
+            input[name="cvc"] {
+                position: relative;
+                top: 36px;
+            }
+            span[id="cvcField"] {
+                position: relative;
+                top: 36px;
+            }
+       } 
+    }
+}
+@media screen and (min-width: 734px) {
+    label[for="cvc"] {
+        top: 5px !important;
+    }
+    input[name="cvc"] {
+        top: 16px !important;
+    }
+    span[id="cvcField"] {
+        top: 16px !important;
     }
 }
 /*
